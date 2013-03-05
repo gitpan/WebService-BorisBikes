@@ -6,8 +6,8 @@
 use strict;
 use warnings;
 
-
 use Test::More;
+use Test::Warn;
 use_ok('WebService::BorisBikes');
 use_ok('WebService::BorisBikes::Station');
 
@@ -16,12 +16,16 @@ use_ok('WebService::BorisBikes::Station');
 ##
 
 my %params = ( 
-          'refresh_rate'    => 60, 
+          'refresh_rate'    => 2, 
           'debug_filename' => 't/livecyclehireupdates.xml',
 );
 
 my $BB = WebService::BorisBikes->new( \%params );
 isa_ok($BB ,'WebService::BorisBikes', 'instantiated WebService::BorisBikes object');
+
+# test the refresh works
+sleep 2;
+warning_is {$BB->get_station_by_id(547);} "Refreshed station data!", "Got correct refresh warning";
 
 ##########################################################################
 ## test public methods and variables
@@ -89,5 +93,7 @@ my $ra_station_ids = $BB->get_station_ids_nearby_order_by_distance_from({'distan
                                                                          'postcode' => 'EC1M 5RF'});
 @expected_ids = qw/246 135 203 95/;
 is_deeply($ra_station_ids, \@expected_ids, 'got correct station ids nearby ordered by distance');
+
+
 
 done_testing();

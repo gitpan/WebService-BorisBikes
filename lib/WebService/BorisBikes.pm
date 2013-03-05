@@ -19,7 +19,8 @@ use WebService::BorisBikes::Station;
 WebService::BorisBikes - A very simple web service to wrap around the 
 live Barclays cycle hire availibility data from the Transport for London website.
 
-To use this module, please register and create an account first ... 
+To use this module, please register and create an account at transport for london 
+first.
 http://www.tfl.gov.uk/businessandpartners/syndication/default.aspx
 
 and always follow the usage guidelines ..
@@ -51,14 +52,15 @@ my $TFL_LIVE_CYCLE_DATA_URL =
 
 =head2 new
 
-    use WebService::BorisBikes;
+Returns a WebService::BorisBikes object. Accepts a hashref with possible keys of 
+refresh_rate & debug_filename.
 
-    my %params = ( 
-        refresh_rate    => 120,    ## seconds
-        debug_filename  => '/tmp/tflcycledata.xml',   
-    );
-    
-    my $BB = WebService::BorisBikes->new( \%params );
+The refresh rate in seconds specifies in seconds how often to update station 
+information. Refresh is performed automatically if needed after calling one of 
+the public methods.
+
+The debug_filename specifies the absolute position of a local London Cycle 
+Scheme XML feed and is used for testing and debugging.
 
 =cut
 
@@ -71,7 +73,7 @@ sub new {
         $self->{$key} = $rh_params->{$key};
     }
 
-    if ( $self->{refresh_rate} < 60 ) {
+    if ( $self->{refresh_rate} < 60 && !$self->{debug_filename}) {
         die "Please specify a refresh time of 60 seconds or more.";
     }
 
@@ -94,6 +96,9 @@ sub get_station_by_id {
     my $self = shift;
     my $id   = shift;
 
+    # refresh stations if need be
+    $self->_refresh_stations();
+
     return $self->{stations}->{$id};
 }
 
@@ -109,6 +114,9 @@ WebService::BorisBikes::Station object.
 sub get_all_stations {
     my $self = shift;
     my $id   = shift;
+
+    # refresh stations if need be
+    $self->_refresh_stations();
 
     return $self->{stations};
 }
@@ -199,6 +207,9 @@ sub get_stations_nearby {
     # get coordinates
     my ($lat,$long) = $self->_get_coordinates_from_place($rh_params); 
 
+    # refresh stations if need be
+    $self->_refresh_stations();
+
     return $self->_get_stations_near_lat_long($lat, 
                                               $long, 
                                               $rh_params->{'distance'}
@@ -275,6 +286,9 @@ sub get_stations_by_name {
     my $self = shift;
     my $search = shift;
 
+    # refresh stations if need be
+    $self->_refresh_stations();
+
     my $rh_stations;
     foreach my $Station ( values $self->{stations} ) {
         if ( $Station->get_name =~ /$search/i ) {
@@ -311,9 +325,6 @@ sub _get_stations_near_lat_long {
         cluck "Coordinates don't appear to be in greater london";
         return;
     }
-
-    # refresh stations if need be
-    $self->_refresh_stations();
 
     # find and return the stations within range
     my $rh_stations;
@@ -364,6 +375,8 @@ sub _refresh_stations {
 
     # now set epoch since last refresh
     $self->{epoch_since_last_refresh} = time;
+
+    warn "Refreshed station data!" if ($self->{debug_filename});
 
     return;
 }
