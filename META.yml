@@ -4,6 +4,7 @@ author:
   - 'Victor Houston <victorhouston@gmail.com>'
 build_requires:
   Test::More: 0
+  Test::Warn: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
@@ -22,4 +23,4 @@ requires:
   Scalar::Util: 0
   Try::Tiny: 0
   XML::Simple: 0
-version: 0.02
+version: 0.06
