@@ -28,7 +28,7 @@ http://www.tfl.gov.uk/tfl/businessandpartners/syndication/assets/syndication-dev
 
 =head1 VERSION
 
-version 0.05
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -84,7 +84,7 @@ sub new {
     return $self;
 }
 
-=head2 get_station_id_by 
+=head2 get_station_by_id 
 
 Returns a WebService::BorisBikes::Station object of the given id 
 
