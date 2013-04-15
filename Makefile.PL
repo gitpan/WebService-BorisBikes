@@ -24,6 +24,7 @@ my %WriteMakefileArgs = (
   "NAME" => "WebService::BorisBikes",
   "PREREQ_PM" => {
     "Carp" => 0,
+    "Class::Accessor" => 0,
     "GIS::Distance::Lite" => 0,
     "Geo::Postcode" => 0,
     "LWP::Simple" => 0,
@@ -32,7 +33,7 @@ my %WriteMakefileArgs = (
     "Try::Tiny" => 0,
     "XML::Simple" => 0
   },
-  "VERSION" => "0.08",
+  "VERSION" => "0.09",
   "test" => {
     "TESTS" => "t/*.t"
   }

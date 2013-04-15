@@ -16,6 +16,7 @@ meta-spec:
 name: WebService-BorisBikes
 requires:
   Carp: 0
+  Class::Accessor: 0
   GIS::Distance::Lite: 0
   Geo::Postcode: 0
   LWP::Simple: 0
@@ -23,4 +24,4 @@ requires:
   Scalar::Util: 0
   Try::Tiny: 0
   XML::Simple: 0
-version: 0.08
+version: 0.09

@@ -8,6 +8,7 @@ use warnings;
 
 use Test::More;
 use Test::Warn;
+use_ok('Class::Accessor');
 use_ok('WebService::BorisBikes');
 use_ok('WebService::BorisBikes::Station');
 
