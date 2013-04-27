@@ -42,7 +42,7 @@ is_deeply( \@WebService::BorisBikes::Station::station_fields,
 
 # get_all_station()
 my $rh_all_stations = $BB->get_all_stations();
-is( scalar keys $rh_all_stations, 553, "Got 553 stations" );
+is( scalar keys %{$rh_all_stations}, 553, "Got 553 stations" );
 
 # get_station_by_id()
 my $Station = $BB->get_station_by_id(547);
@@ -76,10 +76,10 @@ is( $meters, 15367, "Distance between two stations is correct" );
 # get_stations_nearby() postcode
 my $rh_stations =
   $BB->get_stations_nearby( { 'distance' => 330, 'postcode' => 'EC1M5RF' } );
-is( scalar keys $rh_stations, 4, 'got 2 stations nearby postcode' );
+is( scalar keys %{$rh_stations}, 4, 'got 2 stations nearby postcode' );
 my @ids =
   sort { $a <=> $b }
-  map  { $rh_stations->{$_}->{obj}->get_id() } keys $rh_stations;
+  map  { $rh_stations->{$_}->{obj}->get_id() } keys %{$rh_stations};
 my @expected_ids = qw/95 135 203 246/;
 is_deeply( \@ids, \@expected_ids,
     'got correct station ids nearby by postcode' );
@@ -87,16 +87,16 @@ is_deeply( \@ids, \@expected_ids,
 # get_stations_nearby() latlong
 $rh_stations = $BB->get_stations_nearby(
     { 'distance' => 330, 'latlong' => '51.521,-0.102' } );
-is( scalar keys $rh_stations, 4, 'got 2 stations nearby latlong' );
+is( scalar keys %{$rh_stations}, 4, 'got 2 stations nearby latlong' );
 @ids =
   sort { $a <=> $b }
-  map  { $rh_stations->{$_}->{obj}->get_id() } keys $rh_stations;
+  map  { $rh_stations->{$_}->{obj}->get_id() } keys %{$rh_stations};
 @expected_ids = qw/95 135 203 246/;
 is_deeply( \@ids, \@expected_ids, 'got correct station ids nearby by latlong' );
 
 # get_stations_by_name
 $rh_stations = $BB->get_stations_by_name('holland park');
-@ids = sort map { $rh_stations->{$_}->get_id() } keys $rh_stations;
+@ids = sort map { $rh_stations->{$_}->get_id() } keys %{$rh_stations};
 ##@expected_ids = qw/559 515/;
 @expected_ids = qw/515 559/;
 is_deeply( \@ids, \@expected_ids, 'got correct station ids by name' );

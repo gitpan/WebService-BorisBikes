@@ -28,7 +28,7 @@ http://www.tfl.gov.uk/tfl/businessandpartners/syndication/assets/syndication-dev
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
