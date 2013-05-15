@@ -28,7 +28,7 @@ http://www.tfl.gov.uk/tfl/businessandpartners/syndication/assets/syndication-dev
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -267,7 +267,7 @@ sub get_station_ids_nearby_order_by_distance_from {
                  $self->_get_meters_distance_between_station_and_coordinates(
                         $self->{stations}->{$_}, $lat, $long)
                ] 
-             } keys $self->{stations};
+             } keys %{$self->{stations}};
 
     return \@station_ids;
 }
@@ -290,7 +290,7 @@ sub get_stations_by_name {
     $self->_refresh_stations();
 
     my $rh_stations;
-    foreach my $Station ( values $self->{stations} ) {
+    foreach my $Station ( values %{$self->{stations}}) {
         if ( $Station->get_name =~ /$search/i ) {
             $rh_stations->{$Station->get_id()} = $Station;
         }
@@ -328,7 +328,7 @@ sub _get_stations_near_lat_long {
 
     # find and return the stations within range
     my $rh_stations;
-    foreach my $Station ( values $self->{stations} ) {
+    foreach my $Station ( values %{$self->{stations}} ) {
         my $meters = $self->_get_meters_distance_between_station_and_coordinates(
                             $Station, $lat, $long);
         if ($meters <= $distance) {
