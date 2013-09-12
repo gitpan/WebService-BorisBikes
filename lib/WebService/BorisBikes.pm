@@ -28,7 +28,7 @@ http://www.tfl.gov.uk/tfl/businessandpartners/syndication/assets/syndication-dev
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -55,8 +55,8 @@ my $TFL_LIVE_CYCLE_DATA_URL =
 Returns a WebService::BorisBikes object. Accepts a hashref with possible keys of 
 refresh_rate & debug_filename.
 
-The refresh rate in seconds specifies in seconds how often to update station 
-information. Refresh is performed automatically if needed after calling one of 
+The refresh rate specifies in seconds how often to update station information. 
+Refresh is performed automatically if needed after calling one of 
 the public methods.
 
 The debug_filename specifies the absolute position of a local London Cycle 

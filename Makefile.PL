@@ -33,9 +33,9 @@ my %WriteMakefileArgs = (
     "Try::Tiny" => 0,
     "XML::Simple" => 0
   },
-  "VERSION" => "0.11",
+  "VERSION" => "0.12",
   "test" => {
-    "TESTS" => "t/*.t"
+    "TESTS" => ""
   }
 );
 
